@@ -9,4 +9,8 @@ public interface PublicationsService {
 	
 	public List<PublicationDTO> GetPublications();
 	
+	public PublicationDTO GetPblicationById(Long Id);
+	
+	public PublicationDTO UpadetPublication(PublicationDTO publicationDTO, Long id);
+	
 }

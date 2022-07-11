@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "publications")
+@Table(name = "Coments")
 public class Coments {
 
 	@Id

@@ -2,9 +2,12 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,8 +26,10 @@ public class PublicationController {
 	@Autowired
 	private PublicationsService publicationsService;
 	
+	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping
-	public ResponseEntity <PublicationDTO> savePublication(@RequestBody PublicationDTO publicationDTO){
+	public ResponseEntity <PublicationDTO> savePublication(@Valid @RequestBody PublicationDTO publicationDTO){
 		return new ResponseEntity<>(publicationsService.createPublication(publicationDTO),HttpStatus.CREATED);
 	}
 	
@@ -38,9 +43,9 @@ public class PublicationController {
 	public ResponseEntity <PublicationDTO>  GetPublicationById(@PathVariable(name="id") long id){
 		return ResponseEntity.ok(publicationsService.GetPblicationById(id));
 	}
-	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
-	public ResponseEntity<PublicationDTO> UpdatePublication(@RequestBody PublicationDTO publicationDTO,@PathVariable(name="id") long id ){
+	public ResponseEntity<PublicationDTO> UpdatePublication(@Valid @RequestBody PublicationDTO publicationDTO,@PathVariable(name="id") long id ){
 		PublicationDTO publication = publicationsService.UpadetPublication(publicationDTO, id);
 		return new ResponseEntity<>(publication,HttpStatus.OK);
 	}

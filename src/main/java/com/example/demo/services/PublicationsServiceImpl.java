@@ -3,6 +3,7 @@ package com.example.demo.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +17,8 @@ import com.example.demo.repositories.PublicationsRepository;
 
 @Service
 public class PublicationsServiceImpl implements PublicationsService {
+	@Autowired
+	private ModelMapper modelMapper;
 	@Autowired
 	private PublicationsRepository publicationsRepository;
 	@Override
@@ -38,19 +41,14 @@ public class PublicationsServiceImpl implements PublicationsService {
 	}
 	
 	private PublicationDTO mapDTO(publications publication) {
-		PublicationDTO publicationDTO = new PublicationDTO();
-		publicationDTO.setId(publication.getId());
-		publicationDTO.setTitle(publication.getTitle());
-		publicationDTO.setContent(publication.getContent());
-		publicationDTO.setDescription(publication.getDescription());
-			return publicationDTO;
+		PublicationDTO publicationDTO = modelMapper.map(publication, PublicationDTO.class);
+		
+		return publicationDTO;
 		
 	}
 	private publications mapEntity(PublicationDTO publicationDTO) {
-		publications publication = new publications();
-		publication.setTitle(publicationDTO.getTitle());
-		publication.setDescription(publicationDTO.getDescription());
-		publication.setContent(publicationDTO.getContent());
+		publications publication = modelMapper.map(publicationDTO, publications.class);
+		
 		return publication;
 	}
 	

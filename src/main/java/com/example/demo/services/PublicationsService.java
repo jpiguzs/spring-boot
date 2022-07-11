@@ -7,7 +7,7 @@ public interface PublicationsService {
 	
 	public PublicationDTO createPublication(PublicationDTO publicationDTO);
 	
-	public List<PublicationDTO> GetPublications();
+	public List<PublicationDTO> GetPublications(int PageNumber, int pageSize);
 	
 	public PublicationDTO GetPblicationById(Long Id);
 	

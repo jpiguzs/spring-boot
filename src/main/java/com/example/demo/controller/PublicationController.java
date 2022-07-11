@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.PublicationDTO;
@@ -28,8 +29,10 @@ public class PublicationController {
 	}
 	
 	@GetMapping
-	public List<PublicationDTO> GetPublications(){
-		return publicationsService.GetPublications();
+	public List<PublicationDTO> GetPublications(
+			@RequestParam(value="pageNo", defaultValue="0", required=false) int pageNumber, 
+			@RequestParam(value="pageSize", defaultValue="5", required=false) int pageS ){
+		return publicationsService.GetPublications(pageNumber, pageS);
 	}
 	@GetMapping("/{id}")
 	public ResponseEntity <PublicationDTO>  GetPublicationById(@PathVariable(name="id") long id){
